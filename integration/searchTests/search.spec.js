@@ -1,13 +1,25 @@
-// Search tests
 import SearchPage from '../../support/pages/searchPage';
+
+describe('API Requests Test', () => {
+  it('should return status code 200 for all API requests', () => {
+    // Arrange
+    SearchPage.interceptRequests(); // Set up the intercepts for the requests
+
+    // Act
+    SearchPage.visitPage(); // Visit the page that makes the requests
+
+    // Assert
+    SearchPage.verifyRequestsStatusCode(); // Check that all the requests return a status 200
+  });
+});
 
 describe('Search Component Tests', () => {
   beforeEach(() => {
-    // Visit the Gov.il site
-    cy.visit('https://www.gov.il');
+    // Visit the Gov.il site before each test
+    SearchPage.visitMainPage();
   });
 
-  it('should focus on the search input when click on search button', () => {
+  it('should focus on the search input when the search button is clicked', () => {
     // Act & Assert
     SearchPage.clickSearchButton();
     SearchPage.verifySearchInputIsFocused();
@@ -36,5 +48,4 @@ describe('Search Component Tests', () => {
     // Assert
     SearchPage.verifyNoResultsFound();
   });
-
 });
